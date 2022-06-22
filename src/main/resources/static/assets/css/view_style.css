@@ -1,0 +1,113 @@
+#content {
+    width: 60%;
+    margin: 3em auto 2em;
+    border: 1px solid #585858;
+    padding: 3em 2.5em;
+}
+#content #title_box {
+    border-bottom: 1px solid #999;
+}
+#title_box #cate {
+    color : #999;
+    margin-bottom: 1em;
+}
+#title_box #title {
+    font-size: 1.8em;
+    margin-bottom: 0.8em;
+}
+#title_box #sub_title {
+    color: #888;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+}
+#title_box #sub_title #date {
+    color: #aaa;
+    float: right;
+    margin-right: 1.5em;
+    font-size: 0.9em;
+}
+
+#content_box {
+    margin-top: 3em;
+    border-bottom: 1px solid #999;
+    padding-bottom: 2em;
+    position: relative;
+}
+#content_box img {
+    max-width: 100%;
+    min-width: 50%;
+}
+#content_box p {
+    margin: 1em 0;
+}
+#content_box button {
+    padding: 0 0.7em;
+    letter-spacing: 1px;
+    line-height: 2em; height: 2em;
+    position: absolute; right: 0; bottom: 0;
+}
+#content_box button#edit_btn {
+    right: 4em;
+}
+
+#vote_box {
+    text-align: center;
+    margin: 1em;
+}
+#vote_box #agree {
+    background-color: #f2849e;
+}
+#vote_box #agree:hover {
+    background-color: #585858;
+}
+
+#comment_box {
+    background-color: #eee;
+    padding: 1em 1em 3em;
+    margin-top: 1em;
+    position: relative;
+}
+#comment_box .comment {
+    border-bottom: 1px solid #999;
+    position: relative;
+    margin-bottom: 1em;
+}
+#comment_box #writer {
+    color: #999;
+    margin-bottom: 0.7em;
+}
+#comment_box #writer #date {
+    font-size: 0.8em;
+    position: relative; left: 8px;
+}
+#comment_box #agree {
+    position: absolute;
+    right: 0; top: 0;
+}
+#comment_box .comment p {
+    margin-bottom: 1.1em;
+}
+#comment_box .comment #del_comment {
+    padding: 0 0.7em;
+    letter-spacing: 1px;
+    line-height: 2em; height: 2em;
+    position: absolute; right: 0; bottom: 0;
+}
+#comment_box #write_comment textarea {
+    resize: none;
+    border: solid 1px #c9c9c9;
+}
+#comment_box #write_comment #insert_comment {
+    padding: 0 0.7em;
+    letter-spacing: 1px;
+    line-height: 2em; height: 2em;
+    position: absolute; right: 1.2em; bottom: 1.7em;
+}
+#comment_form {
+    margin: 0;
+}
+
+#foot {
+    width: 60%; margin: 2em auto 3em;
+    text-align: right;
+}

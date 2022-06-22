@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>FakeOrReal</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="../assets/css/main.css" />
+	<link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/view_style.css" />
+	<noscript>
+		<link rel="stylesheet" href="../assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+
+				<nav id="login_bar">
+					<ul>
+						<li><a href="">minnmin님</a></li>
+						<li><a href="/login">로그아웃</a></li>
+					</ul>
+				</nav>
+
+				<!-- Logo -->
+				<!-- Main -->
+				<div id="main">
+					<header>
+						<h1><a href="/">Fake or Real </a><span>|</span><span id="head">질문하기</span></h1>
+					</header>
+				</div>
+
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/board_qna">질문하기</a></li>
+				<li><a href="/board_info">대화하기</a></li>
+				<li><a href="/test">검사하기</a></li>
+				<li><a href="/myRanking">프로필</a></li>
+			</ul>
+		</nav>
+
+        <div id="content">
+            <div id="title_box">
+                <p id="cate" th:text="${currentArticle.slug}">지갑</p>
+                <p id="title" th:text="${currentArticle.title}">구찌 지갑 정품인지 질문합니다 </p>
+                <p id="sub_title"><i class="far fa-user-circle"></i> <span id="user_name">minnmin</span> <span id="date">2021.12.13</span></p>
+            </div>
+            <div id="content_box">
+				<img src="../assets/media/test_image2.png" th:src="${currentArticle.getImageLink()}">
+                <p th:text="${currentArticle.body}">중고거래로 산 지갑인데 정품 맞나요? </p>
+                <button id="edit_btn" onclick="onClickEdit()">수정</button>
+				<button id="del_btn" onclick="onClickDelBtn()">삭제</button>
+            </div>
+            <div id="vote_box">
+                <a class="button primary small" id="agree" onclick="onClickReal()"><i class="far fa-thumbs-up"></i>진품(<span class="count" id="countReal">0</span>)</a><a class="button primary small" id="disagree" onclick="onClickFake()"><i class="far fa-thumbs-down"></i>가품(<span class="count" id="countFake">0</span>)</a>
+            </div>
+            <div id="comment_box">
+				<tr th:each="comment : ${comments}">
+                <div class="comment">
+                    <p id="writer"><i class="far fa-user-circle"></i> <span id="user_name">minnmin</span> <span id="date" th:text="${comment.created_at}">2021.11.12</span></p>
+                    <a href="#" th:onclick="|location.href='@{/favorite/{commentId}/{userId}(commentId=${comment.id},userId=${currentUser.id})}'|" class="button primary small" id="agree"><i class="far fa-thumbs-up"></i>추천<span class="count" th:text="${comment.favorite}">(5)</span></a>
+<!--                    <p>로고 위치랑 실밥이 정품이랑 똑같네요. 정품같아요.</p>-->
+					<!-- 타임리프로 뿌려지는지 확인 -->
+					<p th:text="${comment.body}">body</p>
+					<button id="del_comment" th:onclick="|javascript:onClickDelComment('${comment.Id}')|" type="button">삭제</button>
+                </div>
+				</tr>
+<!--                <div class="comment">-->
+<!--                    <p id="writer"><i class="far fa-user-circle"></i> <span id="user_name">nickname1</span> <span id="date">2021.11.12</span></p>-->
+<!--                    <a href="#" class="button primary small" id="agree"><i class="far fa-thumbs-up"></i>추천<span class="count">(5)</span></a>-->
+<!--                    <p>로고 위치랑 실밥이 정품이랑 똑같네요. 정품같아요.</p>-->
+<!--                    <button id="del_comment" onclick="onClickDelComment()">삭제</button>-->
+<!--                </div>-->
+                <div id="write_comment">
+<!--                    <textarea name="" id="" cols="30" rows="3" placeholder="댓글을 입력해주세요."></textarea>-->
+<!--                    <button id="insert_comment">등록</button>-->
+					<form method="post" action="/comment" id="comment_form">
+						<textarea name="body" id="" cols="30" rows="3" placeholder="댓글을 입력해주세요."></textarea>
+						<button id="insert_comment">등록</button>
+					</form>
+					<!-- 내가 만든거 -->
+<!--					<button class="w-100 btn btn-primary btn-lg"-->
+<!--							onclick="location.href='commentForm'"-->
+<!--							th:onclick="|location.href='@{/commentForm}'|" type="button">댓글등록</button>-->
+                </div>
+            </div>
+        </div>
+		<div id="foot">
+			<a href="/board_qna" class="button primary" id="board_btn">목록</a>
+		</div>
+    </div>
+
+	<!-- Scripts -->
+	<script src="../assets/js/jquery.min.js"></script>
+	<script src="../assets/js/browser.min.js"></script>
+	<script src="../assets/js/breakpoints.min.js"></script>
+	<script src="../assets/js/util.js"></script>
+	<script src="../assets/js/main.js"></script>
+	<script th:inline="javascript">
+		var slug = /*[[ ${currentArticle.slug} ]]*/;
+		if(slug=="정보" || slug=="고민" || slug=="일상"){
+			const voteBox = document.getElementById("vote_box")
+			voteBox.style.display="none"
+			const board_btn = document.getElementById("board_btn")
+			board_btn.href="/board_info"
+			const head = document.getElementById("head")
+			head.innerText="대화하기"
+		}
+
+        function onClickDelBtn() {
+            confirm("정말 글을 삭제하시겠습니까?");
+        }
+		function onClickDelComment(idx) {
+			if (confirm("정말 댓글을 삭제하시겠습니까?")){
+				location.href="/delete/"+idx;
+			}
+        }
+		function onClickEdit() {
+			location.href="../edit_qna.html";
+		}
+		function onClickReal() {
+			const count = document.getElementById("countReal")
+			count.innerText="1"
+		}
+		function onClickFake() {
+			const count = document.getElementById("countFake")
+			count.innerText="1"
+		}
+    </script>
+</body>

@@ -1,0 +1,40 @@
+#content {
+    width: 60%;
+    margin: 3em auto 2em;
+    border: 1px solid #585858;
+    padding: 3em 2.5em 4em;
+}
+
+form {
+    overflow: initial;
+}
+form * {
+    margin-bottom: 1em;
+}
+form select {
+    width: 7em;
+}
+form #input_title {
+    font-size: 1.2em;
+}
+#image_container {
+    display: block;
+}
+#image_container div {
+    display: block;
+    max-width: 200px !important;
+    max-height: 300px !important;
+}
+#image_container img {
+    max-width: 100%;
+}
+form textarea {
+    height: 30em;
+    resize: none;
+    border: 1px solid #c9c9c9;
+    padding: 2em 1.5em;
+}
+form #submit_btn {
+    float: right;
+    margin-bottom: 2em;
+}

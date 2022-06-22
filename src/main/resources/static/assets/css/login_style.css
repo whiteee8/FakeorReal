@@ -1,0 +1,63 @@
+body {
+    text-align: center;
+}
+#login_inner {
+    margin-top: 110px;
+}
+#login_inner h1 {
+    font-size: 3.5em;
+    color: #f2849e;
+}
+
+#login_box {
+    display: inline-block;
+    width: 30em;
+    border: solid 2px rgba(88, 88, 88, 0.5);
+    border-radius: 5px;
+    padding: 3em 2em;
+    text-align: center;
+    position: relative;
+}
+#login_box input {
+    display: inline-block;
+    border: solid 1px #c9c9c9;
+    border-radius: 3px;
+    margin: 0.7em 1em;
+    padding-left: 2.1em;
+    width: 80%;
+}
+#login_box i::before {
+    display: inline-block;
+    position: absolute;
+}
+#login_box i.fa-user::before {
+    top: 4.7em;
+    left: 5.2em;
+}
+#login_box i.fa-user-lock::before {
+    top: 9.1em;
+    left: 5em;
+}
+#login_box a {
+    width: 80%;
+    height: 3em;
+    line-height: 3em;
+    margin: 1em;
+}
+
+#login_box ul {
+    display: flex;
+    list-style: none;
+    padding: 0; margin: 0;
+    justify-content: center;
+}
+#login_box ul li{ padding: 0;}
+#login_box ul li::after {
+    content: "|"
+}
+#login_box ul li:last-child::after {
+    content: none;
+}
+#login_box ul a {
+    font-size: 0.8em;
+}

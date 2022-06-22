@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>FakeOrReal</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/write_style.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+
+				<nav id="login_bar">
+					<ul>
+						<li><a href="">minnmin님</a></li>
+						<li><a href="/login">로그아웃</a></li>
+					</ul>
+				</nav>
+
+				<!-- Logo -->
+				<!-- Main -->
+				<div id="main">
+					<header>
+						<h1><a href="/">Fake or Real</a><span>|</span><span>대화하기</span></h1>
+					</header>
+				</div>
+
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/board_qna">질문하기</a></li>
+				<li><a href="/board_info">대화하기</a></li>
+				<li><a href="/test">검사하기</a></li>
+				<li><a href="/myRanking">프로필</a></li>
+			</ul>
+		</nav>
+
+        <div id="content">
+            <form method="post" action="/api/v1/article" id="formBox">
+                <select name="slug" id="slug">
+                    <option value="정보">정보</option>
+                    <option value="고민">고민</option>
+                    <option value="일상">일상</option>
+                </select>
+                <input type="text" name="title" id="input_title" placeholder="제목을 입력해주세요.">
+                <input type="file" id="input_images" name="images" accept="image/*" multiple >
+                <div id="image_container"></div>
+                <textarea name="body" id="body" placeholder="내용을 입력해주세요"></textarea>
+				<input type="button" value="등록" id="submit_btn" class="primary" onclick="onSubmit()">
+            </form>
+        </div>
+    </div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script>
+		var imgEncoding
+		function readMultipleImage(input) {
+
+			const multipleContainer = document.getElementById("image_container")
+
+			while (multipleContainer.hasChildNodes()) {
+				multipleContainer.removeChild(multipleContainer.firstChild);
+			}
+
+			// 인풋 태그에 파일들이 있는 경우
+			if(input.files) {
+				console.log(input.files)
+
+				// 유사배열을 배열로 변환 (forEach문으로 처리하기 위해)
+				const fileArr = Array.from(input.files)
+
+				const $colDiv1 = document.createElement("div")
+				$colDiv1.classList.add("column")
+
+				fileArr.forEach((file, index) => {
+					const reader = new FileReader()
+
+					const $imgDiv = document.createElement("div")
+					const $img = document.createElement("img")
+					$img.classList.add("image")
+
+					$imgDiv.appendChild($img)
+
+					reader.onload = e => {
+						$img.src = e.target.result
+						imgEncoding = e.target.result
+					}
+
+					console.log(file.name)
+
+					multipleContainer.appendChild($imgDiv)
+
+					reader.readAsDataURL(file)
+				})
+			}
+
+			const canvas = document.createElement('canvas');
+			const ctx = canvas.getContext('2d');
+			// Set width and height
+			canvas.width = img.width;
+			canvas.height = img.height;
+			// Draw the image
+			ctx.drawImage(img, 0, 0);
+
+			var base64 = canvas.toDataURL('image/*');
+			strImage = base64.replace(/^data:image\/[a-z]+;base64,/, "");
+		}
+
+		const inputMultipleImage = document.getElementById("input_images")
+		inputMultipleImage.addEventListener("change", e => {
+			readMultipleImage(e.target)
+		})
+
+		function onSubmit() {
+			const form = document.getElementById("form")
+			const slug=document.getElementById("slug")
+			const title = document.getElementById("input_title")
+			const body = document.getElementById("body")
+			const image = document.getElementById("input_images")
+			const data = {
+				"kind": 1,
+				"slug": slug.value,
+				"title": title.value,
+				"body": body.value,
+				"userid" : 0,
+				"description": "description",
+				"img": imgEncoding
+			}
+			// const data = {"body":"string","description":"string","kind":0,"slug": "string","title":"string","userId": 0}
+			const dataJson = JSON.stringify(data)
+			// var formData = new FormData()
+			// formData.append('file',image.files[0])
+			// formData.append('requestDto',new Blob([dataJson], {type:"application/json"}))
+
+			$.ajax({
+				type: "POST",
+				url: "/api/v1/article",
+				data: dataJson,
+				dataType : "json",
+				contentType : "application/json",
+				// processData: false,
+				// contentType:false,
+				success: function(){
+					alert("글 작성 완료")
+					var id
+					$.ajax({
+						url: "/api/v1/article/list/1",
+						dataType: "json",
+						type: "get",
+						success: function(data){
+							if(data.length >0){
+								for (var i in data){
+									var id = data[i].id
+								}
+							}
+							location.href="/commentForm/"+id
+						}
+					})
+
+				},
+				error: function (){
+					alert("오류가 발생하였습니다. 다시 시도해주세요.")
+				}
+			});
+		}
+	</script>
+</body>

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>FakeOrReal</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/write_style.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+
+				<nav id="login_bar">
+					<ul>
+						<li><a href="">minnmin님</a></li>
+						<li><a href="./login.html">로그아웃</a></li>
+					</ul>
+				</nav>
+
+				<!-- Logo -->
+				<!-- Main -->
+				<div id="main">
+					<header>
+						<h1><a href="/">Fake or Real</a><span>|</span><span>질문하기</span></h1>
+					</header>
+				</div>
+
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="./board_qna.html">질문하기</a></li>
+				<li><a href="./board_info.html">대화하기</a></li>
+				<li><a href="/test">검사하기</a></li>
+				<li><a href="./myRanking.html">프로필</a></li>
+			</ul>
+		</nav>
+
+        <div id="content">
+            <form method="post" action="">
+                <select>
+                    <option>가방</option>
+                    <option>의류</option>
+                    <option>신발</option>
+                    <option selected>기타</option>
+                </select>
+                <input type="text" name="title" id="input_title" placeholder="제목을 입력해주세요." value="구찌 지갑 정품인지 질문합니다">
+                <input type="file" id="input_images" name="images" accept="image/*" multiple >
+                <div id="image_container">
+					<div>
+						<img src="./assets/media/test_image.png">
+					</div>
+					<div>
+						<img src="./assets/media/test_image2.png">
+					</div>
+				</div>
+                <textarea name="content" placeholder="내용을 입력해주세요">중고거래로 산 지갑인데 정품 맞나요?</textarea>
+                <input type="submit" value="수정" id="submit_btn" class="primary">
+            </form>
+        </div>
+    </div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+    <script>
+        function readMultipleImage(input) {
+
+            const multipleContainer = document.getElementById("image_container")
+
+            while (multipleContainer.hasChildNodes()) {
+                multipleContainer.removeChild(multipleContainer.firstChild);
+            }
+            
+            // 인풋 태그에 파일들이 있는 경우
+            if(input.files) {
+                console.log(input.files)
+        
+                // 유사배열을 배열로 변환 (forEach문으로 처리하기 위해)
+                const fileArr = Array.from(input.files)
+        
+                const $colDiv1 = document.createElement("div")
+                $colDiv1.classList.add("column")
+        
+                fileArr.forEach((file, index) => {
+                    const reader = new FileReader()
+        
+                    const $imgDiv = document.createElement("div")   
+                    const $img = document.createElement("img")
+                    $img.classList.add("image")
+        
+                    $imgDiv.appendChild($img)
+        
+                    reader.onload = e => {
+                        $img.src = e.target.result
+                    }
+                    
+                    console.log(file.name)
+
+                    multipleContainer.appendChild($imgDiv)
+                    
+                    reader.readAsDataURL(file)
+                })
+            }
+        }
+        
+        const inputMultipleImage = document.getElementById("input_images")
+        inputMultipleImage.addEventListener("change", e => {
+            readMultipleImage(e.target)
+        })
+    </script>
+</body>

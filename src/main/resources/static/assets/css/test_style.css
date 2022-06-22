@@ -1,0 +1,41 @@
+#content .inner {
+    display: block;
+}
+
+#guide_box li {
+    font-size: 0.9em;
+}
+
+#photo_box {
+    margin: 3em;
+}
+#photo_box input {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0;
+}
+#photo_box img {
+    display: block;
+    max-width: 20em;
+}
+
+#test_btn {
+    margin: 3em;
+}
+#test_btn input {
+    background-color: #f2849e;
+}
+#test_btn input:hover {
+    background-color: #585858;
+}
+
+#test_result {
+    padding: 2em 5em;
+}
+#test_result h1 {
+    text-align: center;
+    color: #f2849e;
+    padding: 1em; margin: 0;
+    background-color: #cccccc;
+}
+#test_result h1 span {
+    font-size: 1.2em;
+}

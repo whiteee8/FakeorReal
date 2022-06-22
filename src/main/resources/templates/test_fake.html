@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>FakeOrReal | 검사하기</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/test_style.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+
+				<nav id="login_bar">
+					<ul>
+						<li><a href="">minnmin님</a></li>
+						<li><a href="/login">로그아웃</a></li>
+					</ul>
+				</nav>
+
+				<!-- Logo -->
+				<!-- Main -->
+				<div id="main">
+					<header>
+						<h1><a href="/">Fake or Real</a><span>|</span><span>검사하기</span></h1>
+					</header>
+				</div>
+
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/board_qna">질문하기</a></li>
+				<li><a href="/board_info">대화하기</a></li>
+				<li><a href="/test">검사하기</a></li>
+				<li><a href="/myRanking">프로필</a></li>
+			</ul>
+		</nav>
+
+        <div id="content">
+            <div class="inner">
+                <div id="guide_box">
+                    <ul>
+                        <li>상품의 이미지를 바탕으로 가품 여부를 판단해주는 서비스입니다.</li>
+                        <li>원하는 상품의 이미지를 '이미지 등록' 버튼을 눌러서 등록해주세요.</li>
+                        <li>이미지 등록 후 '검사하기' 버튼을 누르면 결과가 나옵니다.</li>
+                        <li>이 서비스를 이용하기 위해서는 <strong>20포인트</strong>가 필요합니다.</li>
+                        <li>이미지의 해상도가 낮거나, 상품을 특정하기 힘든 이미지일 경우에는 정확한 검사가 이뤄지지 않습니다. 신중하게 이미지를 등록해주세요.</li>
+                    </ul>
+                </div>
+
+				<div id="test_result" th:if="${percent}">
+					<h1> 이 상품은 <span th:text="${percent}">percent</span> % 가품입니다. </h1>
+				</div>
+				<form action="#" enctype="multipart/form-data" th:action="@{/fileUpload}" method="post" onsubmit="return onTestSubmit()">
+					<div id="photo_box">
+						<label for="input-image" class="button primary icon solid fa-download">이미지 등록</label>
+						<input type="file" id="input-image" name="image" accept="image/*" required>
+						<img id="preview-image" src="">
+					</div>
+					<div id="test_btn">
+						<input type="submit" class="button primary" value="검사하기">
+					</div>
+				</form>
+            </div>
+        </div>
+    </div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+    <script>
+		// const resultBox = document.getElementById("test_result");
+		// console.log(resultBox);
+		// resultBox.style.display="none";
+
+        function onTestSubmit() {
+			if (confirm("등록한 이미지로 가품 검사를 진행하시겠습니까?")){
+				// resultBox.style.display="block";
+				return true;
+			}
+			else {
+				return false;
+			}
+        }
+
+		function readImage(input) {
+			console.log("readImage 함수 실행")
+			// 인풋 태그에 파일이 있는 경우
+			if(input.files && input.files[0]) {
+		
+				// FileReader 인스턴스 생성
+				const reader = new FileReader()
+		
+				// 이미지가 로드가 된 경우
+				reader.onload = e => {
+					const previewImage = document.getElementById("preview-image")
+					previewImage.src = e.target.result
+				}
+		
+				// reader가 이미지 읽도록 하기
+				reader.readAsDataURL(input.files[0])
+			}
+		}
+		
+		// input file에 change 이벤트 부여
+		const inputImage = document.getElementById("input-image")
+		inputImage.addEventListener("change", e => {
+			readImage(e.target)
+		})
+    </script>
+</body>
